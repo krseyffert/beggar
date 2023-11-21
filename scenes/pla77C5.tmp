@@ -1,0 +1,86 @@
+[gd_scene load_steps=15 format=3 uid="uid://cckjt0dsvvcd8"]
+
+[ext_resource type="Script" path="res://scripts/playspace.gd" id="1_a75lf"]
+[ext_resource type="Texture2D" uid="uid://bhck1qsnwdv73" path="res://assets/cards/cards_individual/tile000.png" id="1_hkybt"]
+[ext_resource type="Script" path="res://scripts/card_controller.gd" id="2_0eotj"]
+[ext_resource type="Texture2D" uid="uid://dam2g3j4drx81" path="res://assets/cards/cards_individual/tile015.png" id="2_4jfb2"]
+[ext_resource type="Script" path="res://scenes/state_machine.gd" id="2_8l2dx"]
+[ext_resource type="Texture2D" uid="uid://blhru4y1y7jp1" path="res://assets/cards/cards_individual/tile045.png" id="3_4fmf1"]
+[ext_resource type="Script" path="res://scenes/player_turn.gd" id="3_q6a5d"]
+[ext_resource type="Script" path="res://scripts/pile_position.gd" id="3_uqiiw"]
+[ext_resource type="Script" path="res://scripts/deck.gd" id="4_f0mox"]
+[ext_resource type="Script" path="res://scenes/opponent_turn.gd" id="4_yx5n6"]
+[ext_resource type="Script" path="res://scenes/faces_in_play.gd" id="5_wtkyf"]
+[ext_resource type="Script" path="res://scenes/end_game.gd" id="6_021y2"]
+[ext_resource type="Texture2D" uid="uid://0yk6562ontt8" path="res://assets/cards/cards_individual/tile030.png" id="8_neo2l"]
+[ext_resource type="Script" path="res://scenes/deck2_test.gd" id="9_gidpn"]
+
+[node name="playspace" type="Node2D"]
+script = ExtResource("1_a75lf")
+
+[node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_8l2dx")
+starting_state = NodePath("player_turn")
+
+[node name="player_turn" type="Node" parent="state_machine" node_paths=PackedStringArray("opponent_turn", "faces_in_play", "end_game")]
+script = ExtResource("3_q6a5d")
+opponent_turn = NodePath("../opponent_turn")
+faces_in_play = NodePath("../faces_in_play")
+end_game = NodePath("../end_game")
+
+[node name="opponent_turn" type="Node" parent="state_machine" node_paths=PackedStringArray("player_turn", "faces_in_play", "end_game")]
+script = ExtResource("4_yx5n6")
+player_turn = NodePath("../player_turn")
+faces_in_play = NodePath("../faces_in_play")
+end_game = NodePath("../end_game")
+
+[node name="faces_in_play" type="Node" parent="state_machine" node_paths=PackedStringArray("player_turn", "opponent_turn")]
+script = ExtResource("5_wtkyf")
+player_turn = NodePath("../player_turn")
+opponent_turn = NodePath("../opponent_turn")
+
+[node name="end_game" type="Node" parent="state_machine" node_paths=PackedStringArray("player_turn", "faces_in_play")]
+script = ExtResource("6_021y2")
+player_turn = NodePath("../player_turn")
+faces_in_play = NodePath("../opponent_turn")
+
+[node name="card_controller" type="Node" parent="."]
+script = ExtResource("2_0eotj")
+
+[node name="pile_position" type="Node2D" parent="."]
+position = Vector2(553, 264)
+script = ExtResource("3_uqiiw")
+x_factor = 0.14
+y_factor = 0.14
+radi = 79.465
+
+[node name="player_deck_button" type="TextureButton" parent="."]
+offset_left = 62.0
+offset_top = 366.0
+offset_right = 236.0
+offset_bottom = 606.0
+texture_normal = ExtResource("1_hkybt")
+texture_pressed = ExtResource("3_4fmf1")
+texture_hover = ExtResource("1_hkybt")
+texture_disabled = ExtResource("2_4jfb2")
+stretch_mode = 0
+script = ExtResource("4_f0mox")
+
+[node name="opponent_deck_button" type="TextureButton" parent="."]
+offset_left = 914.0
+offset_top = 369.0
+offset_right = 1088.0
+offset_bottom = 609.0
+texture_normal = ExtResource("8_neo2l")
+texture_pressed = ExtResource("3_4fmf1")
+texture_hover = ExtResource("8_neo2l")
+texture_disabled = ExtResource("2_4jfb2")
+stretch_mode = 0
+script = ExtResource("9_gidpn")
+
+[node name="pile" type="CanvasModulate" parent="."]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+
+[connection signal="button_up" from="player_deck_button" to="state_machine/player_turn" method="_on_player_deck_button_button_up"]
+[connection signal="button_up" from="player_deck_button" to="player_deck_button" method="_on_button_up"]
+[connection signal="button_up" from="opponent_deck_button" to="opponent_deck_button" method="_on_button_up"]

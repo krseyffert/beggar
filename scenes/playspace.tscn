@@ -1,0 +1,323 @@
+[gd_scene load_steps=21 format=3 uid="uid://cckjt0dsvvcd8"]
+
+[ext_resource type="Script" path="res://scripts/playspace.gd" id="1_a75lf"]
+[ext_resource type="Texture2D" uid="uid://bhck1qsnwdv73" path="res://assets/cards/cards_individual/tile000.png" id="1_hkybt"]
+[ext_resource type="Script" path="res://scripts/card_controller.gd" id="2_0eotj"]
+[ext_resource type="Texture2D" uid="uid://dam2g3j4drx81" path="res://assets/cards/cards_individual/tile015.png" id="2_4jfb2"]
+[ext_resource type="Script" path="res://scenes/state_machine.gd" id="2_8l2dx"]
+[ext_resource type="Texture2D" uid="uid://blhru4y1y7jp1" path="res://assets/cards/cards_individual/tile045.png" id="3_4fmf1"]
+[ext_resource type="Script" path="res://scenes/player_turn.gd" id="3_q6a5d"]
+[ext_resource type="Script" path="res://scripts/pile_position.gd" id="3_uqiiw"]
+[ext_resource type="Script" path="res://scripts/deck.gd" id="4_f0mox"]
+[ext_resource type="Script" path="res://scenes/opponent_turn.gd" id="4_yx5n6"]
+[ext_resource type="Script" path="res://scenes/faces_in_play.gd" id="5_wtkyf"]
+[ext_resource type="Script" path="res://scenes/end_game.gd" id="6_021y2"]
+[ext_resource type="Texture2D" uid="uid://0yk6562ontt8" path="res://assets/cards/cards_individual/tile030.png" id="8_neo2l"]
+[ext_resource type="Script" path="res://scenes/deck2_test.gd" id="9_gidpn"]
+[ext_resource type="Script" path="res://scenes/player_turn_panel.gd" id="15_0nay8"]
+[ext_resource type="Script" path="res://scenes/opponent_turn_panel.gd" id="16_omtng"]
+[ext_resource type="Script" path="res://scenes/player_card_count_text.gd" id="17_lg65m"]
+[ext_resource type="Script" path="res://scenes/opponent_card_count_text.gd" id="18_6t0m3"]
+[ext_resource type="Script" path="res://scenes/art_credits_toggle.gd" id="19_0p6r6"]
+[ext_resource type="Script" path="res://scenes/how_to_play_toggle.gd" id="20_lw016"]
+
+[node name="playspace" type="Node2D"]
+script = ExtResource("1_a75lf")
+
+[node name="state_machine" type="Node" parent="." node_paths=PackedStringArray("starting_state")]
+script = ExtResource("2_8l2dx")
+starting_state = NodePath("player_turn")
+
+[node name="player_turn" type="Node" parent="state_machine" node_paths=PackedStringArray("opponent_turn", "faces_in_play", "end_game")]
+script = ExtResource("3_q6a5d")
+opponent_turn = NodePath("../opponent_turn")
+faces_in_play = NodePath("../faces_in_play")
+end_game = NodePath("../end_game")
+
+[node name="opponent_turn" type="Node" parent="state_machine" node_paths=PackedStringArray("player_turn", "faces_in_play", "end_game")]
+script = ExtResource("4_yx5n6")
+player_turn = NodePath("../player_turn")
+faces_in_play = NodePath("../faces_in_play")
+end_game = NodePath("../end_game")
+
+[node name="faces_in_play" type="Node" parent="state_machine" node_paths=PackedStringArray("player_turn", "opponent_turn")]
+script = ExtResource("5_wtkyf")
+player_turn = NodePath("../player_turn")
+opponent_turn = NodePath("../opponent_turn")
+
+[node name="end_game" type="Node" parent="state_machine" node_paths=PackedStringArray("player_turn", "faces_in_play")]
+script = ExtResource("6_021y2")
+player_turn = NodePath("../player_turn")
+faces_in_play = NodePath("../opponent_turn")
+
+[node name="card_controller" type="Node" parent="."]
+script = ExtResource("2_0eotj")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.290196, 0.211765, 0.137255, 1)
+
+[node name="pile_position" type="Node2D" parent="."]
+position = Vector2(553, 264)
+script = ExtResource("3_uqiiw")
+x_factor = 0.14
+y_factor = 0.14
+radi = 79.465
+
+[node name="player_deck_button" type="TextureButton" parent="."]
+offset_left = 62.0
+offset_top = 366.0
+offset_right = 236.0
+offset_bottom = 606.0
+texture_normal = ExtResource("1_hkybt")
+texture_pressed = ExtResource("3_4fmf1")
+texture_hover = ExtResource("1_hkybt")
+texture_disabled = ExtResource("2_4jfb2")
+stretch_mode = 0
+script = ExtResource("4_f0mox")
+
+[node name="opponent_deck_button" type="TextureButton" parent="."]
+offset_left = 914.0
+offset_top = 369.0
+offset_right = 1088.0
+offset_bottom = 609.0
+texture_normal = ExtResource("8_neo2l")
+texture_pressed = ExtResource("3_4fmf1")
+texture_hover = ExtResource("8_neo2l")
+texture_disabled = ExtResource("2_4jfb2")
+stretch_mode = 0
+script = ExtResource("9_gidpn")
+
+[node name="ps_cpu_toggle" type="CheckButton" parent="."]
+offset_left = 925.0
+offset_top = 614.0
+offset_right = 1088.0
+offset_bottom = 645.0
+focus_mode = 0
+text = "CPU controlled"
+
+[node name="pile" type="CanvasModulate" parent="."]
+modulate = Color(0.478431, 0.478431, 0.478431, 1)
+
+[node name="player_turn_panel" type="Panel" parent="."]
+offset_left = 76.0
+offset_top = 317.0
+offset_right = 222.0
+offset_bottom = 356.0
+script = ExtResource("15_0nay8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="player_turn_panel"]
+layout_mode = 1
+offset_right = 145.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="player_turn_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3.805)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="player_turn_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 23.065)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Player's Turn[/center]
+"
+
+[node name="opponent_turn_panel" type="Panel" parent="."]
+offset_left = 928.0
+offset_top = 317.0
+offset_right = 1074.0
+offset_bottom = 356.0
+script = ExtResource("16_omtng")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="opponent_turn_panel"]
+layout_mode = 1
+offset_right = 145.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="opponent_turn_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3.805)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="opponent_turn_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 23.065)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Opponent's Turn[/center]
+"
+
+[node name="player_card_count_panel" type="Panel" parent="."]
+offset_left = 245.0
+offset_top = 565.0
+offset_right = 285.0
+offset_bottom = 605.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="player_card_count_panel"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="player_card_count_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3.805)
+layout_mode = 2
+
+[node name="player_card_count_text" type="RichTextLabel" parent="player_card_count_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 23.065)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]52[/center]
+"
+script = ExtResource("17_lg65m")
+
+[node name="opponent_card_count_panel" type="Panel" parent="."]
+offset_left = 865.0
+offset_top = 565.0
+offset_right = 905.0
+offset_bottom = 605.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="opponent_card_count_panel"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="opponent_card_count_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 3.805)
+layout_mode = 2
+
+[node name="opponent_card_count_text" type="RichTextLabel" parent="opponent_card_count_panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 23.065)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]52[/center]
+"
+script = ExtResource("18_6t0m3")
+
+[node name="art_credits_toggle" type="CheckButton" parent="."]
+modulate = Color(1, 1, 1, 0.243137)
+offset_right = 174.0
+offset_bottom = 31.0
+focus_mode = 0
+action_mode = 0
+text = "Show credits"
+script = ExtResource("19_0p6r6")
+
+[node name="credits" type="Panel" parent="."]
+visible = false
+offset_top = 25.0
+offset_right = 300.0
+offset_bottom = 105.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="credits"]
+layout_mode = 1
+offset_left = 10.0
+offset_right = 300.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="credits/VBoxContainer"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+
+[node name="card_art_credit" type="RichTextLabel" parent="credits/VBoxContainer"]
+custom_minimum_size = Vector2(0, 23.065)
+layout_mode = 2
+bbcode_enabled = true
+text = "Cards: Kajiru on itch.io
+"
+
+[node name="MarginContainer2" type="MarginContainer" parent="credits/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="game_credit" type="RichTextLabel" parent="credits/VBoxContainer"]
+custom_minimum_size = Vector2(0, 23.065)
+layout_mode = 2
+bbcode_enabled = true
+text = "Game: KeyRinger"
+
+[node name="end_panel" type="Panel" parent="."]
+offset_left = 78.0
+offset_top = 38.0
+offset_right = 1073.0
+offset_bottom = 262.0
+
+[node name="end_text" type="RichTextLabel" parent="end_panel"]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 98.0
+offset_right = 533.0
+offset_bottom = 140.0
+bbcode_enabled = true
+text = "[b]YOU WIN[/b]"
+
+[node name="Version Number" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.152941)
+offset_left = 2.0
+offset_top = 621.0
+offset_right = 42.0
+offset_bottom = 644.0
+text = "verison 0.1"
+
+[node name="how_to_play_toggle" type="CheckButton" parent="."]
+modulate = Color(1, 1, 1, 0.243137)
+offset_left = 970.0
+offset_top = 3.0
+offset_right = 1144.0
+offset_bottom = 34.0
+focus_mode = 0
+action_mode = 0
+text = "How to play"
+script = ExtResource("20_lw016")
+
+[node name="how_to_play" type="Panel" parent="."]
+visible = false
+offset_left = 605.0
+offset_top = 33.0
+offset_right = 1137.0
+offset_bottom = 482.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="how_to_play"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "---Beggar My Neighbour---
+HOW TO PLAY
+
+A deck of cards is split equally between two players. 
+First player to be unable to play a card, loses.
+
+Players take turns playing the top card from their deck.
+2-10 do nothing.
+
+When a face card or ace is played, depending on the card, 
+the opposing player has a certain number 
+of chances to also play a face card.
+
+If they are able to play a face card, 
+the other player now has to try and play a face card. 
+
+This continues until a player fails to play a face card, 
+at which point, the other player adds the entire 
+pile of played cards to the bottom of their deck.
+
+The game ends when a player needs to play a card, but can't because they don't have any.
+
+Jack = 1 chance
+Queen = 2 chances
+King = 3 chances
+Ace = 4 chances"
+
+[connection signal="scooped" from="card_controller" to="." method="_on_card_controller_scooped"]
+[connection signal="button_up" from="player_deck_button" to="player_deck_button" method="_on_button_up"]
+[connection signal="button_up" from="opponent_deck_button" to="opponent_deck_button" method="_on_button_up"]
+[connection signal="toggled" from="ps_cpu_toggle" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="art_credits_toggle" to="art_credits_toggle" method="_on_toggled"]
+[connection signal="toggled" from="how_to_play_toggle" to="how_to_play_toggle" method="_on_toggled"]
