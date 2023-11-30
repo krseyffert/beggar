@@ -44,7 +44,7 @@ func opponent_drawCard() -> void:
 
 #function to handle the visuals of drawing a card
 func draw_card(value: int, suit: int) -> void:
-	
+
 	if current_card != null:
 		current_scene.remove_child(current_card)
 		pile.add_child(current_card)
@@ -58,7 +58,7 @@ func draw_card(value: int, suit: int) -> void:
 	new_card.value = value
 	new_card.suit = suit
 	new_card.current_face_up = false
-	
+
 	var oval_angle_vector = Vector2(pile_position.radiusx* cos(pile_position.angle), -pile_position.radiusy * sin(pile_position.angle))
 	new_card.position = pile_position.position + oval_angle_vector
 	new_card.rotation += deg_to_rad(randf_range(-3.1,3.1))
@@ -66,7 +66,7 @@ func draw_card(value: int, suit: int) -> void:
 	current_card = new_card
 	current_scene.add_child(new_card)
 	emit_signal("card_played")
-	
+
 
 func game_end():
 		print("game over")
@@ -82,7 +82,7 @@ func _on_card_controller_scooped() -> void:
 	for _i in pile.get_children():
 		print("scooping ", _i.value)
 		_i.queue_free()
-	current_card.darken() 
+	current_card.darken()
 	await get_tree().create_timer(0.5).timeout
 	current_card.face_up(true)
 	current_card.queue_free()

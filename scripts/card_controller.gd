@@ -41,7 +41,7 @@ func opponent_scoop() -> void:
 func player_draw() -> Vector2:
 	var card = player_hand.pop_front( )
 	pile.append(card)
-	
+
 	GlobalParams.active_card = card
 	GlobalParams.player_card_count = player_hand.size()
 	print("Player cards: ", GlobalParams.player_card_count, " Opponent cards: ", GlobalParams.opponent_card_count)
@@ -53,7 +53,7 @@ func player_draw() -> Vector2:
 func opponent_draw() -> Vector2:
 	var card = opponent_hand.pop_front( )
 	pile.append(card)
-	
+
 	GlobalParams.active_card = card
 	GlobalParams.opponent_card_count= opponent_hand.size()
 	print("Player cards: ", GlobalParams.player_card_count, " Opponent cards: ", GlobalParams.opponent_card_count)

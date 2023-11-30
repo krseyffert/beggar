@@ -29,9 +29,9 @@ func _draw():
 		var radius: float = 80
 		draw_set_transform(Vector2.ZERO,0,Vector2(x_factor,y_factor))
 		draw_circle(Vector2.ZERO, radius, color)
-		
-		
-	
+
+
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

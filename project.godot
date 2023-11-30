@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="Beggar"
+config/tags=PackedStringArray("card", "full_game")
 run/main_scene="res://scenes/playspace.tscn"
-config/features=PackedStringArray("4.1", "Mobile")
+config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://Screenshot 2023-11-11 153502.png"
 config/size/resizable=true
 
@@ -26,7 +27,12 @@ gdscript/warnings/integer_division=0
 
 [display]
 
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/size/resizable=false
+window/stretch/mode="canvas_items"
+window/stretch/scale=2.0
+mouse_cursor/custom_image="res://assets/UI/Cursor/hand002.png"
 
 [dotnet]
 

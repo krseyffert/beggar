@@ -12,4 +12,4 @@ func _process(delta: float) -> void:
 
 
 func _on_toggled(button_pressed: bool) -> void:
-	get_node("./../how_to_play").visible = button_pressed
+	get_node("./../UI/how_to_play").visible = button_pressed

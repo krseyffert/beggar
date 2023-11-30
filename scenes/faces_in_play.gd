@@ -21,7 +21,7 @@ func enter():
 	else:
 		max_tries = int(GlobalParams.active_card.x)-10
 	print("max cards to be played: ", str(max_tries))
-	
+
 	while current_count < max_tries:
 		print("i :", str(current_count))
 		if GlobalParams.is_player_turn:
@@ -39,7 +39,7 @@ func enter():
 			else:
 				await opponent_deck_button.opponent_deck_clicked
 			parent.opponent_drawCard()
-		
+
 		if GlobalParams.active_card.x > 10 or GlobalParams.active_card.x == 1:
 			GlobalParams.is_player_turn = not GlobalParams.is_player_turn
 			if GlobalParams.active_card.x == 1:
