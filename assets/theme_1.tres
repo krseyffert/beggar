@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d1ru5cd2vhghe"]
+
+[ext_resource type="FontFile" uid="uid://dcdr7vlamlnxi" path="res://assets/fonts/Pixel64_v1.2.ttf" id="1_1acog"]
+
+[resource]
+default_font = ExtResource("1_1acog")
+default_font_size = 32

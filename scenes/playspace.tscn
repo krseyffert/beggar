@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cckjt0dsvvcd8"]
+[gd_scene load_steps=29 format=3 uid="uid://cckjt0dsvvcd8"]
 
 [ext_resource type="Script" path="res://scripts/playspace.gd" id="1_a75lf"]
 [ext_resource type="Texture2D" uid="uid://bhck1qsnwdv73" path="res://assets/cards/cards_individual/tile000.png" id="1_hkybt"]
@@ -15,12 +15,22 @@
 [ext_resource type="Texture2D" uid="uid://0yk6562ontt8" path="res://assets/cards/cards_individual/tile030.png" id="8_neo2l"]
 [ext_resource type="Script" path="res://scenes/deck2_test.gd" id="9_gidpn"]
 [ext_resource type="Script" path="res://scenes/player_turn_panel.gd" id="15_0nay8"]
-[ext_resource type="Texture2D" uid="uid://c5ed8lamksic5" path="res://assets/UI/brown_pressed.png" id="15_mi83g"]
+[ext_resource type="Texture2D" uid="uid://d0q07t3yy3fdc" path="res://assets/UI/PaperUI/turn_indicator.png" id="15_5u18h"]
+[ext_resource type="Theme" uid="uid://l7uk1371wwrf" path="res://assets/theme_sliders.tres" id="15_m0txe"]
 [ext_resource type="Script" path="res://scenes/opponent_turn_panel.gd" id="16_omtng"]
+[ext_resource type="Theme" uid="uid://d1ru5cd2vhghe" path="res://assets/theme_1.tres" id="17_3020q"]
 [ext_resource type="Script" path="res://scenes/player_card_count_text.gd" id="17_lg65m"]
 [ext_resource type="Script" path="res://scenes/opponent_card_count_text.gd" id="18_6t0m3"]
 [ext_resource type="Script" path="res://scenes/art_credits_toggle.gd" id="19_0p6r6"]
 [ext_resource type="Script" path="res://scenes/how_to_play_toggle.gd" id="20_lw016"]
+[ext_resource type="Texture2D" uid="uid://dsax22on8ab4m" path="res://assets/UI/PaperUI/simple_sheet.png" id="23_ccoil"]
+[ext_resource type="Texture2D" uid="uid://d2klqun35guu0" path="res://assets/UI/PaperUI/square_sheet.png" id="25_75rkb"]
+[ext_resource type="Texture2D" uid="uid://bx5qslyay6qeq" path="res://assets/UI/PaperUI/large_sheet.png" id="26_v6jqj"]
+[ext_resource type="FontFile" uid="uid://dcdr7vlamlnxi" path="res://assets/fonts/Pixel64_v1.2.ttf" id="27_ej16u"]
+
+[sub_resource type="Theme" id="Theme_1h2e5"]
+default_font = ExtResource("27_ej16u")
+default_font_size = 128
 
 [node name="playspace" type="Node2D"]
 script = ExtResource("1_a75lf")
@@ -66,119 +76,27 @@ grow_vertical = 2
 color = Color(0.290196, 0.211765, 0.137255, 1)
 
 [node name="pile_position" type="Node2D" parent="."]
-position = Vector2(553, 264)
+position = Vector2(471, 163)
 script = ExtResource("3_uqiiw")
 x_factor = 0.14
 y_factor = 0.14
 radi = 79.465
 
-[node name="player_deck_button" type="TextureButton" parent="."]
-offset_left = 62.0
-offset_top = 366.0
-offset_right = 236.0
-offset_bottom = 606.0
-texture_normal = ExtResource("1_hkybt")
-texture_pressed = ExtResource("3_4fmf1")
-texture_hover = ExtResource("1_hkybt")
-texture_disabled = ExtResource("2_4jfb2")
-stretch_mode = 0
-script = ExtResource("4_f0mox")
+[node name="player_card_count_panel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 239.0
+offset_top = 372.0
+offset_right = 279.0
+offset_bottom = 412.0
 
-[node name="opponent_deck_button" type="TextureButton" parent="."]
-offset_left = 914.0
-offset_top = 369.0
-offset_right = 1088.0
-offset_bottom = 609.0
-texture_normal = ExtResource("8_neo2l")
-texture_pressed = ExtResource("3_4fmf1")
-texture_hover = ExtResource("8_neo2l")
-texture_disabled = ExtResource("2_4jfb2")
-stretch_mode = 0
-script = ExtResource("9_gidpn")
-
-[node name="ps_cpu_toggle" type="CheckButton" parent="."]
-offset_left = 925.0
-offset_top = 614.0
-offset_right = 1088.0
-offset_bottom = 645.0
-focus_mode = 0
-text = "CPU controlled"
-
-[node name="pile" type="CanvasModulate" parent="."]
-modulate = Color(0.478431, 0.478431, 0.478431, 1)
-
-[node name="player_turn_panel" type="NinePatchRect" parent="."]
-offset_left = 74.0
-offset_top = 317.0
-offset_right = 133.0
-offset_bottom = 333.0
-scale = Vector2(2.555, 2.555)
-texture = ExtResource("15_mi83g")
-region_rect = Rect2(0, 0, 48, 48)
-patch_margin_left = 7
-patch_margin_top = 7
-patch_margin_right = 8
-patch_margin_bottom = 6
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-script = ExtResource("15_0nay8")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="player_turn_panel"]
-layout_mode = 1
-offset_right = 117.0
-offset_bottom = 31.0
+[node name="TextureRect" type="TextureRect" parent="player_card_count_panel"]
+offset_left = -76.61
+offset_top = -16.2
+offset_right = 179.39
+offset_bottom = 143.8
 scale = Vector2(0.5, 0.5)
-
-[node name="MarginContainer" type="MarginContainer" parent="player_turn_panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 0.375)
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="player_turn_panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 23.065)
-layout_mode = 2
-bbcode_enabled = true
-text = "[center]Player's Turn[/center]
-"
-
-[node name="opponent_turn_panel" type="NinePatchRect" parent="."]
-visible = false
-offset_left = 910.175
-offset_top = 317.0
-offset_right = 980.175
-offset_bottom = 335.0
-scale = Vector2(2.555, 2.555)
-texture = ExtResource("15_mi83g")
-region_rect = Rect2(0, 0, 48, 48)
-patch_margin_left = 7
-patch_margin_top = 7
-patch_margin_right = 8
-patch_margin_bottom = 6
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-script = ExtResource("16_omtng")
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="opponent_turn_panel"]
-layout_mode = 1
-offset_right = 141.0
-offset_bottom = 41.0
-scale = Vector2(0.5, 0.5)
-
-[node name="MarginContainer" type="MarginContainer" parent="opponent_turn_panel/VBoxContainer2"]
-custom_minimum_size = Vector2(0, 3.805)
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="opponent_turn_panel/VBoxContainer2"]
-custom_minimum_size = Vector2(0, 23.065)
-layout_mode = 2
-bbcode_enabled = true
-text = "[center]Opponent's Turn[/center]
-"
-
-[node name="player_card_count_panel" type="Panel" parent="."]
-offset_left = 245.0
-offset_top = 565.0
-offset_right = 285.0
-offset_bottom = 605.0
+texture = ExtResource("23_ccoil")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="player_card_count_panel"]
 layout_mode = 1
@@ -190,18 +108,31 @@ custom_minimum_size = Vector2(0, 3.805)
 layout_mode = 2
 
 [node name="player_card_count_text" type="RichTextLabel" parent="player_card_count_panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 23.065)
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
+custom_minimum_size = Vector2(0, 29.685)
 layout_mode = 2
+theme = ExtResource("17_3020q")
 bbcode_enabled = true
 text = "[center]52[/center]
 "
 script = ExtResource("17_lg65m")
 
-[node name="opponent_card_count_panel" type="Panel" parent="."]
-offset_left = 865.0
-offset_top = 565.0
-offset_right = 905.0
-offset_bottom = 605.0
+[node name="opponent_card_count_panel" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 670.0
+offset_top = 372.0
+offset_right = 710.0
+offset_bottom = 412.0
+
+[node name="TextureRect" type="TextureRect" parent="opponent_card_count_panel"]
+layout_mode = 0
+offset_left = -15.745
+offset_top = -16.97
+offset_right = 240.255
+offset_bottom = 143.03
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_ccoil")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="opponent_card_count_panel"]
 layout_mode = 1
@@ -213,104 +144,276 @@ custom_minimum_size = Vector2(0, 3.805)
 layout_mode = 2
 
 [node name="opponent_card_count_text" type="RichTextLabel" parent="opponent_card_count_panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 23.065)
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
+custom_minimum_size = Vector2(0, 29.97)
 layout_mode = 2
+theme = ExtResource("17_3020q")
 bbcode_enabled = true
 text = "[center]52[/center]
 "
 script = ExtResource("18_6t0m3")
 
-[node name="art_credits_toggle" type="CheckButton" parent="."]
-modulate = Color(1, 1, 1, 0.243137)
-offset_right = 174.0
-offset_bottom = 31.0
-focus_mode = 0
-action_mode = 0
-text = "Show credits"
-script = ExtResource("19_0p6r6")
+[node name="player_deck_button" type="TextureButton" parent="."]
+offset_left = 55.0
+offset_top = 203.0
+offset_right = 229.0
+offset_bottom = 443.0
+texture_normal = ExtResource("1_hkybt")
+texture_pressed = ExtResource("3_4fmf1")
+texture_hover = ExtResource("1_hkybt")
+texture_disabled = ExtResource("2_4jfb2")
+stretch_mode = 0
+script = ExtResource("4_f0mox")
 
-[node name="credits" type="Panel" parent="."]
-visible = false
-offset_top = 25.0
-offset_right = 300.0
-offset_bottom = 105.0
+[node name="opponent_deck_button" type="TextureButton" parent="."]
+offset_left = 720.0
+offset_top = 203.0
+offset_right = 894.0
+offset_bottom = 443.0
+texture_normal = ExtResource("8_neo2l")
+texture_pressed = ExtResource("3_4fmf1")
+texture_hover = ExtResource("8_neo2l")
+texture_disabled = ExtResource("2_4jfb2")
+stretch_mode = 0
+script = ExtResource("9_gidpn")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="credits"]
+[node name="pile" type="CanvasModulate" parent="."]
+modulate = Color(0.513726, 0.462745, 0.392157, 1)
+
+[node name="player_turn_panel" type="NinePatchRect" parent="."]
+offset_left = 4.0
+offset_top = 447.0
+offset_right = 288.0
+offset_bottom = 515.0
+texture = ExtResource("15_5u18h")
+region_rect = Rect2(19, 17, 295, 68)
+patch_margin_left = 136
+patch_margin_top = 38
+patch_margin_right = 148
+patch_margin_bottom = 30
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+script = ExtResource("15_0nay8")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="player_turn_panel"]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
 layout_mode = 1
-offset_left = 10.0
-offset_right = 300.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = -14.5
+offset_right = 63.5
+offset_bottom = 14.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("17_3020q")
+bbcode_enabled = true
+text = "[center]Player's Turn[/center]
+"
+
+[node name="opponent_turn_panel" type="NinePatchRect" parent="."]
+offset_left = 954.415
+offset_top = 447.0
+offset_right = 1235.42
+offset_bottom = 515.0
+scale = Vector2(-1, 1)
+texture = ExtResource("15_5u18h")
+region_rect = Rect2(19, 17, 295, 68)
+patch_margin_left = 132
+patch_margin_top = 34
+patch_margin_right = 149
+patch_margin_bottom = 34
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+script = ExtResource("16_omtng")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="opponent_turn_panel"]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 98.2647
+offset_top = -14.5
+offset_right = 292.264
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(-1, 1)
+theme = ExtResource("17_3020q")
+bbcode_enabled = true
+text = "[center]Opponent's Turn[/center]
+"
+
+[node name="credits" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = -14.395
+offset_top = 1.715
+offset_right = 25.605
+offset_bottom = 41.715
+
+[node name="TextureRect" type="TextureRect" parent="credits"]
+layout_mode = 0
+offset_right = 40.0
 offset_bottom = 40.0
+rotation = 0.0261799
+texture = ExtResource("15_5u18h")
 
-[node name="MarginContainer" type="MarginContainer" parent="credits/VBoxContainer"]
-custom_minimum_size = Vector2(0, 4)
-layout_mode = 2
-
-[node name="card_art_credit" type="RichTextLabel" parent="credits/VBoxContainer"]
+[node name="card_art_credit" type="RichTextLabel" parent="credits/TextureRect"]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
 custom_minimum_size = Vector2(0, 23.065)
 layout_mode = 2
+offset_left = 62.4023
+offset_top = 37.6644
+offset_right = 321.402
+offset_bottom = 68.6644
+theme = ExtResource("17_3020q")
 bbcode_enabled = true
 text = "Cards: Kajiru on itch.io
 "
 
-[node name="MarginContainer2" type="MarginContainer" parent="credits/VBoxContainer"]
-custom_minimum_size = Vector2(0, 8)
-layout_mode = 2
+[node name="TextureRect2" type="TextureRect" parent="credits"]
+layout_mode = 0
+offset_top = 58.93
+offset_right = 336.0
+offset_bottom = 154.93
+rotation = 0.0174533
+texture = ExtResource("15_5u18h")
 
-[node name="game_credit" type="RichTextLabel" parent="credits/VBoxContainer"]
+[node name="game_credit" type="RichTextLabel" parent="credits/TextureRect2"]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
 custom_minimum_size = Vector2(0, 23.065)
 layout_mode = 2
+offset_left = 61.0901
+offset_top = 39.2948
+offset_right = 351.09
+offset_bottom = 68.2948
+theme = ExtResource("17_3020q")
 bbcode_enabled = true
 text = "Game: KeyRinger"
 
-[node name="end_panel" type="Panel" parent="."]
-visible = false
-offset_left = 78.0
-offset_top = 38.0
-offset_right = 1073.0
-offset_bottom = 262.0
-
-[node name="end_text" type="RichTextLabel" parent="end_panel"]
-layout_mode = 0
-offset_left = 427.0
-offset_top = 98.0
-offset_right = 533.0
-offset_bottom = 140.0
-bbcode_enabled = true
-text = "[b]YOU WIN[/b]"
-
 [node name="Version Number" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.152941)
-offset_left = 2.0
-offset_top = 621.0
-offset_right = 42.0
-offset_bottom = 644.0
-text = "verison 0.1"
+offset_top = 511.0
+offset_right = 98.0
+offset_bottom = 539.0
+theme = ExtResource("17_3020q")
+text = "verison 0.2"
+
+[node name="art_credits_toggle" type="CheckButton" parent="."]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
+offset_right = 117.0
+offset_bottom = 36.0
+focus_mode = 0
+theme = ExtResource("15_m0txe")
+action_mode = 0
+text = "Credits"
+script = ExtResource("19_0p6r6")
 
 [node name="how_to_play_toggle" type="CheckButton" parent="."]
-modulate = Color(1, 1, 1, 0.243137)
-offset_left = 970.0
-offset_top = 3.0
-offset_right = 1144.0
-offset_bottom = 34.0
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
+offset_left = 778.0
+offset_top = 7.0
+offset_right = 952.0
+offset_bottom = 43.0
 focus_mode = 0
+theme = ExtResource("15_m0txe")
 action_mode = 0
 text = "How to play"
 script = ExtResource("20_lw016")
 
-[node name="how_to_play" type="Panel" parent="."]
-visible = false
-offset_left = 605.0
-offset_top = 33.0
-offset_right = 1137.0
-offset_bottom = 482.0
+[node name="ps_cpu_toggle" type="CheckButton" parent="."]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
+offset_left = 727.0
+offset_top = 507.0
+offset_right = 903.0
+offset_bottom = 543.0
+focus_mode = 0
+theme = ExtResource("15_m0txe")
+text = "CPU controlled"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="how_to_play"]
+[node name="end_panel2" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 528.0
+offset_top = 246.0
+offset_right = 568.0
+offset_bottom = 286.0
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="end_panel2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -328.0
+offset_top = -272.0
+offset_right = 328.0
+offset_bottom = 272.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.244346
+pivot_offset = Vector2(328, 272)
+texture = ExtResource("26_v6jqj")
+
+[node name="end_text" type="RichTextLabel" parent="end_panel2"]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -21.0
+offset_right = 224.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_1h2e5")
+bbcode_enabled = true
+text = "[b]YOU WIN[/b]"
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="how_to_play" type="NinePatchRect" parent="UI"]
+unique_name_in_owner = true
+visible = false
+offset_left = 400.0
+offset_top = 37.0
+offset_right = 951.0
+offset_bottom = 537.0
+texture = ExtResource("25_75rkb")
+region_rect = Rect2(23, 23, 177, 177)
+patch_margin_left = 84
+patch_margin_top = 93
+patch_margin_right = 94
+patch_margin_bottom = 85
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI/how_to_play"]
+modulate = Color(0.705882, 0.654902, 0.580392, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 26.0
+offset_right = -19.0
+offset_bottom = -34.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("17_3020q")
 text = "---Beggar My Neighbour---
 HOW TO PLAY
 
@@ -341,6 +444,6 @@ Ace = 4 chances"
 [connection signal="scooped" from="card_controller" to="." method="_on_card_controller_scooped"]
 [connection signal="button_up" from="player_deck_button" to="player_deck_button" method="_on_button_up"]
 [connection signal="button_up" from="opponent_deck_button" to="opponent_deck_button" method="_on_button_up"]
-[connection signal="toggled" from="ps_cpu_toggle" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="art_credits_toggle" to="art_credits_toggle" method="_on_toggled"]
 [connection signal="toggled" from="how_to_play_toggle" to="how_to_play_toggle" method="_on_toggled"]
+[connection signal="toggled" from="ps_cpu_toggle" to="." method="_on_check_button_toggled"]

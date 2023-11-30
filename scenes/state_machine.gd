@@ -9,14 +9,14 @@ var current_state: State
 func init(parent: Playspace) -> void:
 	for child in get_children():
 		child.parent = parent
-		
+
 	change_state(starting_state)
 
 #change to new state by calling exit login on current stat
 func change_state(new_state: State):
 	if current_state:
 		current_state.exit()
-	
+
 	current_state = new_state
 	current_state.enter()
 
